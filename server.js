@@ -32,10 +32,30 @@ app.get('/get_perkara', async (req, res) => {
   }
 });
 
+// on expressJS could I use routing like below ?
+// first route if not have parameter
+// second route if has param
+// app.get('/get_log', async (req, res) => {}
+// app.get('/get_log/:perkara_id', async (req, res) => {}
+
 app.get('/get_log/:perkara_id', async (req, res) => {
   try {
     const client = await pool.connect();
     const result = await client.query("SELECT * FROM log_activity WHERE no_perkara='"+req.params.perkara_id+"'  ORDER BY log_time DESC");
+    client.release(); // Release the client back to the pool
+    res.status(200).json(result.rows);
+  } 
+  catch (err) {
+    console.error('Error executing query', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// WHEN EDITOR SELECT LOG TO EDIT
+app.get('/get_log_edit/:log_id', async (req, res) => {
+  try {
+    const client = await pool.connect();
+    const result = await client.query("SELECT log_text FROM log_activity WHERE id="+req.params.log_id);
     client.release(); // Release the client back to the pool
     res.status(200).json(result.rows);
   } 

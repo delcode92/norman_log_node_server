@@ -10,11 +10,21 @@ CREATE TABLE IF NOT EXISTS users(
     level VARCHAR(100) 
 );
 
+CREATE TABLE IF NOT EXISTS penasihat_hukum(
+    id SERIAL PRIMARY KEY, 
+    nama VARCHAR(100), 
+    email VARCHAR(100), 
+    hp VARCHAR(100), 
+    addr VARCHAR(100)
+); 
+
 CREATE TABLE IF NOT EXISTS asisten( 
     id SERIAL PRIMARY KEY, 
     id_user SERIAL, 
     nama VARCHAR(100), 
-    hp VARCHAR(100) 
+    email VARCHAR(100), 
+    hp VARCHAR(100), 
+    addr VARCHAR(100)
 );
 
 CREATE TABLE IF NOT EXISTS client(
@@ -22,20 +32,41 @@ CREATE TABLE IF NOT EXISTS client(
     nik_client VARCHAR(100),
     nm_client VARCHAR(100),
     hp_client VARCHAR(100),
+    email VARCHAR(100),
+
+    mandiri BOOLEAN,
+    penghubung BOOLEAN,
+    nama_penghubung VARCHAR(100),
+    no_kontak_penghubung VARCHAR(100),
+    
+    alamat VARCHAR(100),
     file_scan_ktp VARCHAR
 );
 
+CREATE TABLE IF NOT EXISTS basic_info();
+
+CREATE TABLE IF NOT EXISTS jns_perkara(
+   id SERIAL PRIMARY KEY,
+   list_jns_perkara JSONB, 
+);
 
 CREATE TABLE IF NOT EXISTS perkara(
    id SERIAL PRIMARY KEY,
    id_client SERIAL,
+   id_asisten SERIAL,
+   reg_id VARCHAR(100),
    no_perkara VARCHAR(100),
-   jns_perkara VARCHAR(100),
+   no_laporan_polisi VARCHAR(100),
+   no_dll VARCHAR(100),
+   
+   id_jns_perkara VARCHAR(100),
    judul VARCHAR(100),
    deskripsi VARCHAR,
    lokasi VARCHAR(100),
+   
    nm_penggugat VARCHAR(100),
-   nm_tergugat VARCHAR(100),
+   para_pihak_tergugat JSONB,
+   
    tgl_dibuat_perkara TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
    tgl_selesai_perkara TIMESTAMP
 );
