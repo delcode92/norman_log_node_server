@@ -1,5 +1,8 @@
 -- user:
 -- su, editor, asisten
+-- 
+
+-- based on this query create diagram for each table, so I could see then big picture
 
 -- CREATE DATABASE norman_log;
 
@@ -30,25 +33,23 @@ CREATE TABLE IF NOT EXISTS asisten(
 CREATE TABLE IF NOT EXISTS client(
     id SERIAL PRIMARY KEY, 
     nik_client VARCHAR(100),
+    file_scan_ktp VARCHAR
+    
     nm_client VARCHAR(100),
     hp_client VARCHAR(100),
     email VARCHAR(100),
+    alamat VARCHAR(100),
 
     mandiri BOOLEAN,
     penghubung BOOLEAN,
     nama_penghubung VARCHAR(100),
     no_kontak_penghubung VARCHAR(100),
     
-    alamat VARCHAR(100),
-    file_scan_ktp VARCHAR
 );
 
 CREATE TABLE IF NOT EXISTS basic_info();
 
-CREATE TABLE IF NOT EXISTS jns_perkara(
-   id SERIAL PRIMARY KEY,
-   list_jns_perkara JSONB, 
-);
+CREATE TABLE IF NOT EXISTS jns_perkara( id SERIAL PRIMARY KEY, list_jns_perkara JSONB );
 
 CREATE TABLE IF NOT EXISTS perkara(
    id SERIAL PRIMARY KEY,
