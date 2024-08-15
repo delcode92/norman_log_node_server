@@ -47,7 +47,10 @@ CREATE TABLE IF NOT EXISTS client(
     
 );
 
-CREATE TABLE IF NOT EXISTS basic_info();
+CREATE TABLE IF NOT EXISTS registrasi_id(
+    id SERIAL PRIMARY KEY,
+    reg_id VARCHAR(100)
+);
 
 CREATE TABLE IF NOT EXISTS jns_perkara( id SERIAL PRIMARY KEY, list_jns_perkara JSONB );
 
