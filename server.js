@@ -81,6 +81,32 @@ app.post('/add_log', async (req, res) => {
   
 });
 
+app.post('/update_regid', async (req, res) => {
+  const { old_key, new_key, val } = req.body;
+
+  try {
+    const client = await pool.connect();
+    
+    if(new_key != ""){
+      // update the KEY or VALUE
+      await client.query("UPDATE jns_perkara SET list_jns_perkara = jsonb_set(list_jns_perkara, "+new_key+", list_jns_perkara->"+old_key+")");
+      
+      // remove old key
+      await client.query("UPDATE jns_perkara SET list_jns_perkara = list_jns_perkara - "+old_key+" WHERE list_jns_perkara ? "+ old_key);
+    }
+    else if(new_key==""){
+      await client.query(" UPDATE jns_perkara SET list_jns_perkara = jsonb_set(list_jns_perkara, "+old_key+", "+val+", false)");
+    }
+
+    client.release(); // Release the client back to the pool
+    res.status(200).json({ success: true });
+
+  } catch (err) {
+    console.error('Error executing query', err);
+    res.status(500).json({ error: 'Something wrong' });
+  }
+});
+
 app.post('/login', async (req, res) => {
 
 });
