@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS registrasi_id(
     reg_id VARCHAR(100)
 );
 
-CREATE TABLE IF NOT EXISTS jns_perkara( id SERIAL PRIMARY KEY, list_jns_perkara JSONB );
+CREATE TABLE IF NOT EXISTS list_jns_perkara( id SERIAL PRIMARY KEY, jns_perkara_reg_id VARCHAR(30), jns_perkara VARCHAR(100));
 
 CREATE TABLE IF NOT EXISTS perkara(
    id SERIAL PRIMARY KEY,

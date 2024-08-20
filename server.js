@@ -21,7 +21,7 @@ const pool = new Pool({
 app.get('/get_jns_perkara', async (req, res) => {
   try {
     const client = await pool.connect();
-    const result = await client.query('SELECT list_jns_perkara from jns_perkara');
+    const result = await client.query('SELECT * FROM list_jns_perkara');
     
     client.release(); // Release the client back to the pool
     res.status(200).json(result.rows);
@@ -96,30 +96,31 @@ app.post('/add_log', async (req, res) => {
 });
 
 app.post('/update_regid', async (req, res) => {
-  const { old_key, new_key, value } = req.body;
+  const { index, field, value } = req.body;
   
-  console.log("old key: " + old_key);
-  console.log("new key: " + new_key);
-  console.log("value: " + value);
+  // console.log("old key: " + old_key);
+  // console.log("new key: " + new_key);
+  // console.log("value: " + value);
 
   try {
     const client = await pool.connect();
     
-    if(new_key != ""){
-      // update the KEY or VALUE
+    // if(new_key != ""){
+    //   // update the KEY or VALUE
       
-      // UPDATE jns_perkara SET list_jns_perkara = jsonb_set(list_jns_perkara, '{reg.100}', list_jns_perkara->'reg.1');
+    //   // UPDATE jns_perkara SET list_jns_perkara = jsonb_set(list_jns_perkara, '{reg.100}', list_jns_perkara->'reg.1');
 
-      await client.query("UPDATE jns_perkara SET list_jns_perkara = jsonb_set(list_jns_perkara, '{"+new_key+"}', list_jns_perkara->'"+old_key+"')");
+    //   await client.query("UPDATE jns_perkara SET list_jns_perkara = jsonb_set(list_jns_perkara, '{"+new_key+"}', list_jns_perkara->'"+old_key+"')");
       
-      // remove old key
-      //UPDATE jns_perkara SET list_jns_perkara = list_jns_perkara - 'reg.1' WHERE list_jns_perkara ? 'reg.1';
-      await client.query("UPDATE jns_perkara SET list_jns_perkara = list_jns_perkara - '"+old_key+"' WHERE list_jns_perkara ? '"+ old_key +"'");
-    }
-    else if(new_key==""){
-      await client.query(" UPDATE jns_perkara SET list_jns_perkara = jsonb_set(list_jns_perkara, "+old_key+", "+val+", false)");
-    }
+    //   // remove old key
+    //   //UPDATE jns_perkara SET list_jns_perkara = list_jns_perkara - 'reg.1' WHERE list_jns_perkara ? 'reg.1';
+    //   await client.query("UPDATE jns_perkara SET list_jns_perkara = list_jns_perkara - '"+old_key+"' WHERE list_jns_perkara ? '"+ old_key +"'");
+    // }
+    // else if(new_key==""){
+    //   await client.query(" UPDATE jns_perkara SET list_jns_perkara = jsonb_set(list_jns_perkara, "+old_key+", "+val+", false)");
+    // }
 
+    await client.query("UPDATE list_jns_perkara SET "+field+"='"+value+"' WHERE id="+index);
     // client.release(); // Release the client back to the pool
     res.status(200).json({ success: true });
 
