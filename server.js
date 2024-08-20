@@ -18,6 +18,20 @@ const pool = new Pool({
   port: 5432, // Default PostgreSQL port
 });
 
+app.get('/get_jns_perkara', async (req, res) => {
+  try {
+    const client = await pool.connect();
+    const result = await client.query('SELECT list_jns_perkara from jns_perkara');
+    
+    client.release(); // Release the client back to the pool
+    res.status(200).json(result.rows);
+  } 
+  catch (err) {
+    console.error('Error executing query', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 app.get('/get_perkara', async (req, res) => {
   try {
     const client = await pool.connect();
@@ -82,23 +96,31 @@ app.post('/add_log', async (req, res) => {
 });
 
 app.post('/update_regid', async (req, res) => {
-  const { old_key, new_key, val } = req.body;
+  const { old_key, new_key, value } = req.body;
+  
+  console.log("old key: " + old_key);
+  console.log("new key: " + new_key);
+  console.log("value: " + value);
 
   try {
     const client = await pool.connect();
     
     if(new_key != ""){
       // update the KEY or VALUE
-      await client.query("UPDATE jns_perkara SET list_jns_perkara = jsonb_set(list_jns_perkara, "+new_key+", list_jns_perkara->"+old_key+")");
+      
+      // UPDATE jns_perkara SET list_jns_perkara = jsonb_set(list_jns_perkara, '{reg.100}', list_jns_perkara->'reg.1');
+
+      await client.query("UPDATE jns_perkara SET list_jns_perkara = jsonb_set(list_jns_perkara, '{"+new_key+"}', list_jns_perkara->'"+old_key+"')");
       
       // remove old key
-      await client.query("UPDATE jns_perkara SET list_jns_perkara = list_jns_perkara - "+old_key+" WHERE list_jns_perkara ? "+ old_key);
+      //UPDATE jns_perkara SET list_jns_perkara = list_jns_perkara - 'reg.1' WHERE list_jns_perkara ? 'reg.1';
+      await client.query("UPDATE jns_perkara SET list_jns_perkara = list_jns_perkara - '"+old_key+"' WHERE list_jns_perkara ? '"+ old_key +"'");
     }
     else if(new_key==""){
       await client.query(" UPDATE jns_perkara SET list_jns_perkara = jsonb_set(list_jns_perkara, "+old_key+", "+val+", false)");
     }
 
-    client.release(); // Release the client back to the pool
+    // client.release(); // Release the client back to the pool
     res.status(200).json({ success: true });
 
   } catch (err) {
