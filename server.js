@@ -21,7 +21,7 @@ const pool = new Pool({
 app.get('/get_jns_perkara', async (req, res) => {
   try {
     const client = await pool.connect();
-    const result = await client.query('SELECT * FROM list_jns_perkara');
+    const result = await client.query('SELECT * FROM list_jns_perkara ORDER BY id');
     
     client.release(); // Release the client back to the pool
     res.status(200).json(result.rows);
@@ -96,7 +96,7 @@ app.post('/add_log', async (req, res) => {
 });
 
 app.post('/update_regid', async (req, res) => {
-  const { index, field, value } = req.body;
+  const { id, field, value } = req.body;
   
   // console.log("old key: " + old_key);
   // console.log("new key: " + new_key);
@@ -120,8 +120,14 @@ app.post('/update_regid', async (req, res) => {
     //   await client.query(" UPDATE jns_perkara SET list_jns_perkara = jsonb_set(list_jns_perkara, "+old_key+", "+val+", false)");
     // }
 
-    await client.query("UPDATE list_jns_perkara SET "+field+"='"+value+"' WHERE id="+index);
+    await client.query("UPDATE list_jns_perkara SET "+field+"='"+value+"' WHERE id="+id);
     // client.release(); // Release the client back to the pool
+
+    // const result = await client.query('SELECT * FROM list_jns_perkara');
+    
+    client.release(); // Release the client back to the pool
+    // res.status(200).json(result.rows);
+
     res.status(200).json({ success: true });
 
   } catch (err) {
