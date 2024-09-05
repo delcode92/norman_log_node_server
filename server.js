@@ -11,7 +11,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 const pool = new Pool({
-  user: 'postgres',
+  user: 'Admin',
   host: 'localhost',
   database: 'norman_log',
   // password: 'your_password',
@@ -115,6 +115,34 @@ app.post('/update_regid', async (req, res) => {
     res.status(500).json({ error: 'Something wrong' });
   }
 });
+
+
+app.post('/save_ap_bio', async (req, res) => {
+  const { Name, Email, Phone, Addr, table_name } = req.body;
+  console.log(Name, Email, Phone, Addr, table_name ); 
+  
+  try {
+    const client = await pool.connect();
+    // const result = await client.query(
+    //   "INSERT INTO "+table_name+" (nama, email, hp, addr) VALUES ($1, $2, $3, $4)", 
+    //   [Name, Email, Phone, Addr]
+    // );
+
+    const result = await client.query(
+      "INSERT INTO "+table_name+" (nama, email, hp, addr) VALUES ('"+Name+"', '"+Email+"', '"+Phone+"', '"+Addr+"')"
+    );
+
+    client.release(); // Release the client back to the pool
+    res.status(200).json({ success: true });
+    // console.log("akhir: ", result);
+
+  } catch (err) {
+    console.error('Error executing query', err);
+    res.status(500).json({ error: 'Something wrong' });
+  }
+  
+});
+
 
 app.post('/login', async (req, res) => {
 
