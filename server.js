@@ -32,6 +32,20 @@ app.get('/get_jns_perkara', async (req, res) => {
   }
 });
 
+app.get('/get_penasihat', async (req, res) => {
+  try {
+    const client = await pool.connect();
+    const result = await client.query('SELECT * FROM penasehat_hukum ORDER BY nama');
+    
+    client.release(); // Release the client back to the pool
+    res.status(200).json(result.rows);
+  } 
+  catch (err) {
+    console.error('Error executing query', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 app.get('/get_perkara', async (req, res) => {
   try {
     const client = await pool.connect();
