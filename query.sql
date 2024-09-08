@@ -13,14 +13,7 @@ CREATE TABLE IF NOT EXISTS users(
     level VARCHAR(100) 
 );
 
-CREATE TABLE IF NOT EXISTS penasehat_hukum(
-    id SERIAL PRIMARY KEY, 
-    nama VARCHAR(100), 
-    email VARCHAR(100), 
-    hp VARCHAR(100), 
-    addr VARCHAR(100),
-    avatar VARCHAR(100)
-); 
+CREATE TABLE IF NOT EXISTS penasehat_hukum( id SERIAL PRIMARY KEY,nama VARCHAR(100),email VARCHAR(100),hp VARCHAR(100),addr VARCHAR(100),avatar VARCHAR(100)); 
 
 CREATE TABLE IF NOT EXISTS asisten( 
     id SERIAL PRIMARY KEY, 
