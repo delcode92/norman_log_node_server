@@ -1,4 +1,10 @@
+require('dotenv').config();
 const express = require("express");
+
+const cloudinary = require('cloudinary').v2;
+const multer = require('multer');
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+
 const bodyParser = require('body-parser');
 const app = express();
 const cors = require("cors");
@@ -11,12 +17,33 @@ app.use(cors());
 app.use(bodyParser.json());
 
 const pool = new Pool({
-  user: 'postgres',
+  user: 'Admin',
   host: 'localhost',
   database: 'norman_log',
   // password: 'your_password',
   port: 5432, // Default PostgreSQL port
 });
+
+// ================== Configure Cloudinary =====================
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
+// Configure multer storage
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'your_folder_name', // Optional: specify a folder in Cloudinary
+    allowed_formats: ['jpg', 'png', 'jpeg', 'gif'] // Optional: restrict file types
+  }
+});
+
+// Initialize multer upload
+const upload = multer({ storage: storage });
+// ======================================
+
 
 app.get('/get_jns_perkara', async (req, res) => {
   try {
@@ -36,6 +63,20 @@ app.get('/get_penasihat', async (req, res) => {
   try {
     const client = await pool.connect();
     const result = await client.query('SELECT * FROM penasehat_hukum ORDER BY nama');
+    
+    client.release(); // Release the client back to the pool
+    res.status(200).json(result.rows);
+  } 
+  catch (err) {
+    console.error('Error executing query', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+app.get('/get_pendamping', async (req, res) => {
+  try {
+    const client = await pool.connect();
+    const result = await client.query('SELECT * FROM asisten ORDER BY nama');
     
     client.release(); // Release the client back to the pool
     res.status(200).json(result.rows);
@@ -131,6 +172,39 @@ app.post('/update_regid', async (req, res) => {
 });
 
 
+app.post('/upload_ktp', upload.single('file'), async (req, res) => {
+  console.log("masuk 1");
+  if (!req.file) {
+    console.log("masuk 2");
+    return res.status(400).json({ error: 'No file uploaded' });
+  }
+  
+  // File uploaded successfully
+  console.log("masuk 3");
+  res.status(200).json({ fileUrl: req.file.path });
+});
+
+
+
+app.post('/save_client', async (req, res) => {
+  const { NIK, NamaPenggugat, HP, Alamat } = req.body;
+  
+  try {
+    const client = await pool.connect();
+   
+    const result = await client.query(
+      "INSERT INTO "+table_name+" (nama, email, hp, addr) VALUES ('"+Name+"', '"+Email+"', '"+Phone+"', '"+Addr+"')"
+    );
+
+    client.release(); 
+    res.status(200).json({ success: true });
+    
+  } catch (err) {
+    console.error('Error executing query', err);
+    res.status(500).json({ error: 'Something wrong' });
+  }
+});
+
 app.post('/save_ap_bio', async (req, res) => {
   const { Name, Email, Phone, Addr, table_name } = req.body;
   console.log(Name, Email, Phone, Addr, table_name ); 
@@ -164,4 +238,6 @@ app.post('/login', async (req, res) => {
 
 app.listen(PORT, () => {
     console.log(`Server started on port ${PORT}`);
+    
+    // console.log(process.env.CLOUDINARY_CLOUD_NAME);
   });
