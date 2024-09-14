@@ -17,7 +17,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 const pool = new Pool({
-  user: 'Admin',
+  user: 'postgres',
   host: 'localhost',
   database: 'norman_log',
   // password: 'your_password',
