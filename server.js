@@ -35,7 +35,7 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
-    folder: 'your_folder_name', // Optional: specify a folder in Cloudinary
+    folder: process.env.CLOUDINARY_DIR, // Optional: specify a folder in Cloudinary
     allowed_formats: ['jpg', 'png', 'jpeg', 'gif'] // Optional: restrict file types
   }
 });
@@ -193,10 +193,13 @@ app.post('/save_client', async (req, res) => {
     const client = await pool.connect();
 
     const result = await client.query(
-      "INSERT INTO "+table_name+" (nik_client, nm_client, hp_client, email, mandiri, penghubung, nama_penghubung, no_kontak_penghubung, alamat, file_scan_ktp) VALUES ('"+NIK+"', '"+NamaPenggugat+"', '"+HP+"', '"+Email+"', '"+ViaMandiri+"', '"+NamaPenghubung+"', '"+KontakPenghubung+"', '"+Alamat+"', '"+file_url+"') RETURNING id"
+      "INSERT INTO "+table_name+" (nik_client, nm_client, hp_client, email, mandiri, nama_penghubung, no_kontak_penghubung, alamat, file_scan_ktp) VALUES ('"+NIK+"', '"+NamaPenggugat+"', '"+HP+"', '"+Email+"', '"+ViaMandiri+"', '"+NamaPenghubung+"', '"+KontakPenghubung+"', '"+Alamat+"', '"+file_url+"') RETURNING id"
     );
 
     client.release();
+    console.log("================");
+    console.log(result.rows);
+
     res.status(200).json(result.rows); 
     
   } catch (err) {
