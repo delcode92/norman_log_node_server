@@ -187,17 +187,17 @@ app.post('/upload_ktp', upload.single('file'), async (req, res) => {
 
 
 app.post('/save_client', async (req, res) => {
-  const { NIK, NamaPenggugat, HP, Alamat } = req.body;
+  const { NIK, NamaPenggugat, HP, Email, Alamat, ViaMandiri, NamaPenghubung, KontakPenghubung, file_url, table_name } = req.body;
   
   try {
     const client = await pool.connect();
-   
+
     const result = await client.query(
-      "INSERT INTO "+table_name+" (nama, email, hp, addr) VALUES ('"+Name+"', '"+Email+"', '"+Phone+"', '"+Addr+"')"
+      "INSERT INTO "+table_name+" (nik_client, nm_client, hp_client, email, mandiri, penghubung, nama_penghubung, no_kontak_penghubung, alamat, file_scan_ktp) VALUES ('"+NIK+"', '"+NamaPenggugat+"', '"+HP+"', '"+Email+"', '"+ViaMandiri+"', '"+NamaPenghubung+"', '"+KontakPenghubung+"', '"+Alamat+"', '"+file_url+"') RETURNING id"
     );
 
-    client.release(); 
-    res.status(200).json({ success: true });
+    client.release();
+    res.status(200).json(result.rows); 
     
   } catch (err) {
     console.error('Error executing query', err);

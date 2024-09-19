@@ -27,18 +27,17 @@ CREATE TABLE IF NOT EXISTS asisten(
 CREATE TABLE IF NOT EXISTS client(
     id SERIAL PRIMARY KEY, 
     nik_client VARCHAR(100),
-    file_scan_ktp VARCHAR
-    
     nm_client VARCHAR(100),
+    
     hp_client VARCHAR(100),
     email VARCHAR(100),
-    alamat VARCHAR(100),
 
     mandiri BOOLEAN,
-    penghubung BOOLEAN,
     nama_penghubung VARCHAR(100),
     no_kontak_penghubung VARCHAR(100),
     
+    alamat VARCHAR(100),
+    file_scan_ktp VARCHAR
 );
 
 CREATE TABLE IF NOT EXISTS registrasi_id(
