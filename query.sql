@@ -50,18 +50,17 @@ CREATE TABLE IF NOT EXISTS list_jns_perkara( id SERIAL PRIMARY KEY, jns_perkara_
 CREATE TABLE IF NOT EXISTS perkara(
    id SERIAL PRIMARY KEY,
    id_client SERIAL,
+   id_penasehat_hukum SERIAL,
    id_asisten SERIAL,
-   reg_id VARCHAR(100),
+   
    no_perkara VARCHAR(100),
    no_laporan_polisi VARCHAR(100),
    no_dll VARCHAR(100),
+   reg_id VARCHAR(100),
    
-   id_jns_perkara VARCHAR(100),
    judul VARCHAR(100),
    deskripsi VARCHAR,
-   lokasi VARCHAR(100),
    
-   nm_penggugat VARCHAR(100),
    para_pihak_tergugat JSONB,
    
    tgl_dibuat_perkara TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

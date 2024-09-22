@@ -17,7 +17,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 const pool = new Pool({
-  user: 'postgres',
+  user: 'Admin',
   host: 'localhost',
   database: 'norman_log',
   // password: 'your_password',
@@ -184,8 +184,6 @@ app.post('/upload_ktp', upload.single('file'), async (req, res) => {
   res.status(200).json({ fileUrl: req.file.path });
 });
 
-
-
 app.post('/save_client', async (req, res) => {
   const { NIK, NamaPenggugat, HP, Email, Alamat, ViaMandiri, NamaPenghubung, KontakPenghubung, file_url, table_name } = req.body;
   
@@ -206,6 +204,10 @@ app.post('/save_client', async (req, res) => {
     console.error('Error executing query', err);
     res.status(500).json({ error: 'Something wrong' });
   }
+});
+
+app.post('/save_perkara', async (req, res) => {
+  const { } = req.body;
 });
 
 app.post('/save_ap_bio', async (req, res) => {
