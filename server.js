@@ -17,7 +17,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 const pool = new Pool({
-  user: 'Admin',
+  user: 'postgres',
   host: 'localhost',
   database: 'norman_log',
   // password: 'your_password',
@@ -207,7 +207,69 @@ app.post('/save_client', async (req, res) => {
 });
 
 app.post('/save_perkara', async (req, res) => {
-  const { } = req.body;
+  const {idClient, IdPenasihat, IdPendamping, NoPerkara, NoLpPol, NoLainnya, perkaraOrder, Judul, Deskripsi, ParaPihakTergugat, table_name} = req.body;
+  
+  /*
+  try {
+    const client = await pool.connect();
+
+    const q = {text:''};
+
+    const result = await client.query(
+      "INSERT INTO "+table_name+" (id_client, id_penasehat_hukum, id_asisten, no_perkara, no_laporan_polisi, no_dll, jns_perkara_order, judul, deskripsi, para_pihak_tergugat) VALUES ("+idClient+", '"+IdPenasihat+"', '"+IdPendamping+"', '"+NoPerkara+"', '"+NoLpPol+"', '"+NoLainnya+"', '"+perkaraOrder+"', '"+Judul+"', '"+Deskripsi+"', '"+ParaPihakTergugat+"')"
+    );
+
+    // const result = await client.query(
+    //   "INSERT INTO "+table_name+" (id_client, id_penasehat_hukum) VALUES ("+idClient+", "+IdPenasihat+")"
+    // );
+
+    client.release();
+    console.log("================");
+    console.log(result.rows);
+
+    res.status(200).json(result.rows); 
+    
+  } catch (err) {
+    console.error('Error executing query', err);
+    res.status(500).json({ error: 'Something wrong' });
+  }
+  */
+
+  try {
+    const client = await pool.connect();
+    try {
+      const query = {
+        text: `
+          INSERT INTO ${table_name} (
+            id_client, id_penasehat_hukum, id_asisten, no_perkara,
+            no_laporan_polisi, no_dll, jns_perkara_order, judul,
+            deskripsi, para_pihak_tergugat
+          ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+        `,
+        values: [
+          idClient,
+          JSON.stringify(IdPenasihat),
+          JSON.stringify(IdPendamping),
+          NoPerkara,
+          NoLpPol,
+          NoLainnya,
+          perkaraOrder,
+          Judul,
+          Deskripsi,
+          JSON.stringify(ParaPihakTergugat)
+        ]
+      };
+
+      const result = await client.query(query);
+      res.status(200).json({ message: 'Data inserted successfully', result });
+    } finally {
+      client.release();
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'An error occurred while inserting data' });
+  }
+
 });
 
 app.post('/save_ap_bio', async (req, res) => {

@@ -21,7 +21,7 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- Name: asisten; Type: TABLE; Schema: public; Owner: Admin
+-- Name: asisten; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.asisten (
@@ -34,10 +34,10 @@ CREATE TABLE public.asisten (
 );
 
 
-ALTER TABLE public.asisten OWNER TO "Admin";
+ALTER TABLE public.asisten OWNER TO "postgres";
 
 --
--- Name: asisten_id_seq; Type: SEQUENCE; Schema: public; Owner: Admin
+-- Name: asisten_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE public.asisten_id_seq
@@ -49,17 +49,17 @@ CREATE SEQUENCE public.asisten_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.asisten_id_seq OWNER TO "Admin";
+ALTER TABLE public.asisten_id_seq OWNER TO "postgres";
 
 --
--- Name: asisten_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: Admin
+-- Name: asisten_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public.asisten_id_seq OWNED BY public.asisten.id;
 
 
 --
--- Name: asisten_id_user_seq; Type: SEQUENCE; Schema: public; Owner: Admin
+-- Name: asisten_id_user_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE public.asisten_id_user_seq
@@ -71,17 +71,17 @@ CREATE SEQUENCE public.asisten_id_user_seq
     CACHE 1;
 
 
-ALTER TABLE public.asisten_id_user_seq OWNER TO "Admin";
+ALTER TABLE public.asisten_id_user_seq OWNER TO "postgres";
 
 --
--- Name: asisten_id_user_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: Admin
+-- Name: asisten_id_user_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public.asisten_id_user_seq OWNED BY public.asisten.id_user;
 
 
 --
--- Name: client; Type: TABLE; Schema: public; Owner: Admin
+-- Name: client; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.client (
@@ -98,10 +98,10 @@ CREATE TABLE public.client (
 );
 
 
-ALTER TABLE public.client OWNER TO "Admin";
+ALTER TABLE public.client OWNER TO "postgres";
 
 --
--- Name: client_id_seq; Type: SEQUENCE; Schema: public; Owner: Admin
+-- Name: client_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE public.client_id_seq
@@ -113,17 +113,17 @@ CREATE SEQUENCE public.client_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.client_id_seq OWNER TO "Admin";
+ALTER TABLE public.client_id_seq OWNER TO "postgres";
 
 --
--- Name: client_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: Admin
+-- Name: client_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public.client_id_seq OWNED BY public.client.id;
 
 
 --
--- Name: list_jns_perkara; Type: TABLE; Schema: public; Owner: Admin
+-- Name: list_jns_perkara; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.list_jns_perkara (
@@ -133,10 +133,10 @@ CREATE TABLE public.list_jns_perkara (
 );
 
 
-ALTER TABLE public.list_jns_perkara OWNER TO "Admin";
+ALTER TABLE public.list_jns_perkara OWNER TO "postgres";
 
 --
--- Name: list_jns_perkara_id_seq; Type: SEQUENCE; Schema: public; Owner: Admin
+-- Name: list_jns_perkara_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE public.list_jns_perkara_id_seq
@@ -148,17 +148,17 @@ CREATE SEQUENCE public.list_jns_perkara_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.list_jns_perkara_id_seq OWNER TO "Admin";
+ALTER TABLE public.list_jns_perkara_id_seq OWNER TO "postgres";
 
 --
--- Name: list_jns_perkara_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: Admin
+-- Name: list_jns_perkara_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public.list_jns_perkara_id_seq OWNED BY public.list_jns_perkara.id;
 
 
 --
--- Name: log_activity; Type: TABLE; Schema: public; Owner: Admin
+-- Name: log_activity; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.log_activity (
@@ -171,10 +171,10 @@ CREATE TABLE public.log_activity (
 );
 
 
-ALTER TABLE public.log_activity OWNER TO "Admin";
+ALTER TABLE public.log_activity OWNER TO "postgres";
 
 --
--- Name: log_activity_id_seq; Type: SEQUENCE; Schema: public; Owner: Admin
+-- Name: log_activity_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE public.log_activity_id_seq
@@ -186,17 +186,17 @@ CREATE SEQUENCE public.log_activity_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.log_activity_id_seq OWNER TO "Admin";
+ALTER TABLE public.log_activity_id_seq OWNER TO "postgres";
 
 --
--- Name: log_activity_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: Admin
+-- Name: log_activity_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public.log_activity_id_seq OWNED BY public.log_activity.id;
 
 
 --
--- Name: penasehat_hukum; Type: TABLE; Schema: public; Owner: Admin
+-- Name: penasehat_hukum; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.penasehat_hukum (
@@ -209,10 +209,10 @@ CREATE TABLE public.penasehat_hukum (
 );
 
 
-ALTER TABLE public.penasehat_hukum OWNER TO "Admin";
+ALTER TABLE public.penasehat_hukum OWNER TO "postgres";
 
 --
--- Name: penasehat_hukum_id_seq; Type: SEQUENCE; Schema: public; Owner: Admin
+-- Name: penasehat_hukum_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE public.penasehat_hukum_id_seq
@@ -224,17 +224,17 @@ CREATE SEQUENCE public.penasehat_hukum_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.penasehat_hukum_id_seq OWNER TO "Admin";
+ALTER TABLE public.penasehat_hukum_id_seq OWNER TO "postgres";
 
 --
--- Name: penasehat_hukum_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: Admin
+-- Name: penasehat_hukum_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public.penasehat_hukum_id_seq OWNED BY public.penasehat_hukum.id;
 
 
 --
--- Name: perkara; Type: TABLE; Schema: public; Owner: Admin
+-- Name: perkara; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.perkara (
@@ -254,10 +254,10 @@ CREATE TABLE public.perkara (
 );
 
 
-ALTER TABLE public.perkara OWNER TO "Admin";
+ALTER TABLE public.perkara OWNER TO "postgres";
 
 --
--- Name: perkara_id_asisten_seq; Type: SEQUENCE; Schema: public; Owner: Admin
+-- Name: perkara_id_asisten_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE public.perkara_id_asisten_seq
@@ -269,17 +269,17 @@ CREATE SEQUENCE public.perkara_id_asisten_seq
     CACHE 1;
 
 
-ALTER TABLE public.perkara_id_asisten_seq OWNER TO "Admin";
+ALTER TABLE public.perkara_id_asisten_seq OWNER TO "postgres";
 
 --
--- Name: perkara_id_asisten_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: Admin
+-- Name: perkara_id_asisten_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public.perkara_id_asisten_seq OWNED BY public.perkara.id_asisten;
 
 
 --
--- Name: perkara_id_client_seq; Type: SEQUENCE; Schema: public; Owner: Admin
+-- Name: perkara_id_client_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE public.perkara_id_client_seq
@@ -291,17 +291,17 @@ CREATE SEQUENCE public.perkara_id_client_seq
     CACHE 1;
 
 
-ALTER TABLE public.perkara_id_client_seq OWNER TO "Admin";
+ALTER TABLE public.perkara_id_client_seq OWNER TO "postgres";
 
 --
--- Name: perkara_id_client_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: Admin
+-- Name: perkara_id_client_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public.perkara_id_client_seq OWNED BY public.perkara.id_client;
 
 
 --
--- Name: perkara_id_penasehat_hukum_seq; Type: SEQUENCE; Schema: public; Owner: Admin
+-- Name: perkara_id_penasehat_hukum_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE public.perkara_id_penasehat_hukum_seq
@@ -313,17 +313,17 @@ CREATE SEQUENCE public.perkara_id_penasehat_hukum_seq
     CACHE 1;
 
 
-ALTER TABLE public.perkara_id_penasehat_hukum_seq OWNER TO "Admin";
+ALTER TABLE public.perkara_id_penasehat_hukum_seq OWNER TO "postgres";
 
 --
--- Name: perkara_id_penasehat_hukum_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: Admin
+-- Name: perkara_id_penasehat_hukum_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public.perkara_id_penasehat_hukum_seq OWNED BY public.perkara.id_penasehat_hukum;
 
 
 --
--- Name: perkara_id_seq; Type: SEQUENCE; Schema: public; Owner: Admin
+-- Name: perkara_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE public.perkara_id_seq
@@ -335,17 +335,17 @@ CREATE SEQUENCE public.perkara_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.perkara_id_seq OWNER TO "Admin";
+ALTER TABLE public.perkara_id_seq OWNER TO "postgres";
 
 --
--- Name: perkara_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: Admin
+-- Name: perkara_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public.perkara_id_seq OWNED BY public.perkara.id;
 
 
 --
--- Name: users; Type: TABLE; Schema: public; Owner: Admin
+-- Name: users; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.users (
@@ -356,10 +356,10 @@ CREATE TABLE public.users (
 );
 
 
-ALTER TABLE public.users OWNER TO "Admin";
+ALTER TABLE public.users OWNER TO "postgres";
 
 --
--- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: Admin
+-- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE public.users_id_seq
@@ -371,94 +371,94 @@ CREATE SEQUENCE public.users_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.users_id_seq OWNER TO "Admin";
+ALTER TABLE public.users_id_seq OWNER TO "postgres";
 
 --
--- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: Admin
+-- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
--- Name: asisten id; Type: DEFAULT; Schema: public; Owner: Admin
+-- Name: asisten id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.asisten ALTER COLUMN id SET DEFAULT nextval('public.asisten_id_seq'::regclass);
 
 
 --
--- Name: asisten id_user; Type: DEFAULT; Schema: public; Owner: Admin
+-- Name: asisten id_user; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.asisten ALTER COLUMN id_user SET DEFAULT nextval('public.asisten_id_user_seq'::regclass);
 
 
 --
--- Name: client id; Type: DEFAULT; Schema: public; Owner: Admin
+-- Name: client id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.client ALTER COLUMN id SET DEFAULT nextval('public.client_id_seq'::regclass);
 
 
 --
--- Name: list_jns_perkara id; Type: DEFAULT; Schema: public; Owner: Admin
+-- Name: list_jns_perkara id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.list_jns_perkara ALTER COLUMN id SET DEFAULT nextval('public.list_jns_perkara_id_seq'::regclass);
 
 
 --
--- Name: log_activity id; Type: DEFAULT; Schema: public; Owner: Admin
+-- Name: log_activity id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.log_activity ALTER COLUMN id SET DEFAULT nextval('public.log_activity_id_seq'::regclass);
 
 
 --
--- Name: penasehat_hukum id; Type: DEFAULT; Schema: public; Owner: Admin
+-- Name: penasehat_hukum id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.penasehat_hukum ALTER COLUMN id SET DEFAULT nextval('public.penasehat_hukum_id_seq'::regclass);
 
 
 --
--- Name: perkara id; Type: DEFAULT; Schema: public; Owner: Admin
+-- Name: perkara id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.perkara ALTER COLUMN id SET DEFAULT nextval('public.perkara_id_seq'::regclass);
 
 
 --
--- Name: perkara id_client; Type: DEFAULT; Schema: public; Owner: Admin
+-- Name: perkara id_client; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.perkara ALTER COLUMN id_client SET DEFAULT nextval('public.perkara_id_client_seq'::regclass);
 
 
 --
--- Name: perkara id_penasehat_hukum; Type: DEFAULT; Schema: public; Owner: Admin
+-- Name: perkara id_penasehat_hukum; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.perkara ALTER COLUMN id_penasehat_hukum SET DEFAULT nextval('public.perkara_id_penasehat_hukum_seq'::regclass);
 
 
 --
--- Name: perkara id_asisten; Type: DEFAULT; Schema: public; Owner: Admin
+-- Name: perkara id_asisten; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.perkara ALTER COLUMN id_asisten SET DEFAULT nextval('public.perkara_id_asisten_seq'::regclass);
 
 
 --
--- Name: users id; Type: DEFAULT; Schema: public; Owner: Admin
+-- Name: users id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
 
 
 --
--- Data for Name: asisten; Type: TABLE DATA; Schema: public; Owner: Admin
+-- Data for Name: asisten; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.asisten (id, id_user, nama, email, hp, addr) FROM stdin;
@@ -467,7 +467,7 @@ COPY public.asisten (id, id_user, nama, email, hp, addr) FROM stdin;
 
 
 --
--- Data for Name: client; Type: TABLE DATA; Schema: public; Owner: Admin
+-- Data for Name: client; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.client (id, nik_client, nm_client, hp_client, email, mandiri, nama_penghubung, no_kontak_penghubung, alamat, file_scan_ktp) FROM stdin;
@@ -477,7 +477,7 @@ COPY public.client (id, nik_client, nm_client, hp_client, email, mandiri, nama_p
 
 
 --
--- Data for Name: list_jns_perkara; Type: TABLE DATA; Schema: public; Owner: Admin
+-- Data for Name: list_jns_perkara; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.list_jns_perkara (id, jns_perkara_reg_id, jns_perkara) FROM stdin;
@@ -537,7 +537,7 @@ COPY public.list_jns_perkara (id, jns_perkara_reg_id, jns_perkara) FROM stdin;
 58	reg.2.1.1.3	Kepala Desa dan Perangkat Desa
 59	reg.2.1.1.4	Kepegawaian
 60	reg.2.1.1.5	Perizinan
-61	reg.2.1.1.6	Tindakan Administrasi Pemerintah/Tindakan Faktual
+61	reg.2.1.1.6	Tindakan postgresistrasi Pemerintah/Tindakan Faktual
 62	reg.2.1.1.7	Partai Politik
 63	reg.2.1.1.8	lain-lain
 64	reg.2.1.2	Permohonan UU AP
@@ -572,7 +572,7 @@ COPY public.list_jns_perkara (id, jns_perkara_reg_id, jns_perkara) FROM stdin;
 
 
 --
--- Data for Name: log_activity; Type: TABLE DATA; Schema: public; Owner: Admin
+-- Data for Name: log_activity; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.log_activity (id, no_perkara, id_client, id_asisten, log_text, log_time) FROM stdin;
@@ -580,7 +580,7 @@ COPY public.log_activity (id, no_perkara, id_client, id_asisten, log_text, log_t
 
 
 --
--- Data for Name: penasehat_hukum; Type: TABLE DATA; Schema: public; Owner: Admin
+-- Data for Name: penasehat_hukum; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.penasehat_hukum (id, nama, email, hp, addr, avatar) FROM stdin;
@@ -589,7 +589,7 @@ COPY public.penasehat_hukum (id, nama, email, hp, addr, avatar) FROM stdin;
 
 
 --
--- Data for Name: perkara; Type: TABLE DATA; Schema: public; Owner: Admin
+-- Data for Name: perkara; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.perkara (id, id_client, id_penasehat_hukum, id_asisten, no_perkara, no_laporan_polisi, no_dll, reg_id, judul, deskripsi, para_pihak_tergugat, tgl_dibuat_perkara, tgl_selesai_perkara) FROM stdin;
@@ -597,7 +597,7 @@ COPY public.perkara (id, id_client, id_penasehat_hukum, id_asisten, no_perkara, 
 
 
 --
--- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: Admin
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.users (id, username, password, level) FROM stdin;
@@ -605,84 +605,84 @@ COPY public.users (id, username, password, level) FROM stdin;
 
 
 --
--- Name: asisten_id_seq; Type: SEQUENCE SET; Schema: public; Owner: Admin
+-- Name: asisten_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
 SELECT pg_catalog.setval('public.asisten_id_seq', 1, true);
 
 
 --
--- Name: asisten_id_user_seq; Type: SEQUENCE SET; Schema: public; Owner: Admin
+-- Name: asisten_id_user_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
 SELECT pg_catalog.setval('public.asisten_id_user_seq', 1, true);
 
 
 --
--- Name: client_id_seq; Type: SEQUENCE SET; Schema: public; Owner: Admin
+-- Name: client_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
 SELECT pg_catalog.setval('public.client_id_seq', 4, true);
 
 
 --
--- Name: list_jns_perkara_id_seq; Type: SEQUENCE SET; Schema: public; Owner: Admin
+-- Name: list_jns_perkara_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
 SELECT pg_catalog.setval('public.list_jns_perkara_id_seq', 87, true);
 
 
 --
--- Name: log_activity_id_seq; Type: SEQUENCE SET; Schema: public; Owner: Admin
+-- Name: log_activity_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
 SELECT pg_catalog.setval('public.log_activity_id_seq', 1, false);
 
 
 --
--- Name: penasehat_hukum_id_seq; Type: SEQUENCE SET; Schema: public; Owner: Admin
+-- Name: penasehat_hukum_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
 SELECT pg_catalog.setval('public.penasehat_hukum_id_seq', 1, true);
 
 
 --
--- Name: perkara_id_asisten_seq; Type: SEQUENCE SET; Schema: public; Owner: Admin
+-- Name: perkara_id_asisten_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
 SELECT pg_catalog.setval('public.perkara_id_asisten_seq', 1, false);
 
 
 --
--- Name: perkara_id_client_seq; Type: SEQUENCE SET; Schema: public; Owner: Admin
+-- Name: perkara_id_client_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
 SELECT pg_catalog.setval('public.perkara_id_client_seq', 1, false);
 
 
 --
--- Name: perkara_id_penasehat_hukum_seq; Type: SEQUENCE SET; Schema: public; Owner: Admin
+-- Name: perkara_id_penasehat_hukum_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
 SELECT pg_catalog.setval('public.perkara_id_penasehat_hukum_seq', 1, false);
 
 
 --
--- Name: perkara_id_seq; Type: SEQUENCE SET; Schema: public; Owner: Admin
+-- Name: perkara_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
 SELECT pg_catalog.setval('public.perkara_id_seq', 1, false);
 
 
 --
--- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: Admin
+-- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
 SELECT pg_catalog.setval('public.users_id_seq', 1, false);
 
 
 --
--- Name: asisten asisten_pkey; Type: CONSTRAINT; Schema: public; Owner: Admin
+-- Name: asisten asisten_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.asisten
@@ -690,7 +690,7 @@ ALTER TABLE ONLY public.asisten
 
 
 --
--- Name: client client_pkey; Type: CONSTRAINT; Schema: public; Owner: Admin
+-- Name: client client_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.client
@@ -698,7 +698,7 @@ ALTER TABLE ONLY public.client
 
 
 --
--- Name: list_jns_perkara list_jns_perkara_pkey; Type: CONSTRAINT; Schema: public; Owner: Admin
+-- Name: list_jns_perkara list_jns_perkara_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.list_jns_perkara
@@ -706,7 +706,7 @@ ALTER TABLE ONLY public.list_jns_perkara
 
 
 --
--- Name: log_activity log_activity_pkey; Type: CONSTRAINT; Schema: public; Owner: Admin
+-- Name: log_activity log_activity_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.log_activity
@@ -714,7 +714,7 @@ ALTER TABLE ONLY public.log_activity
 
 
 --
--- Name: penasehat_hukum penasehat_hukum_pkey; Type: CONSTRAINT; Schema: public; Owner: Admin
+-- Name: penasehat_hukum penasehat_hukum_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.penasehat_hukum
@@ -722,7 +722,7 @@ ALTER TABLE ONLY public.penasehat_hukum
 
 
 --
--- Name: perkara perkara_pkey; Type: CONSTRAINT; Schema: public; Owner: Admin
+-- Name: perkara perkara_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.perkara
@@ -730,7 +730,7 @@ ALTER TABLE ONLY public.perkara
 
 
 --
--- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: Admin
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.users

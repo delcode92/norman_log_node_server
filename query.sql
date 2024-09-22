@@ -47,25 +47,7 @@ CREATE TABLE IF NOT EXISTS registrasi_id(
 
 CREATE TABLE IF NOT EXISTS list_jns_perkara( id SERIAL PRIMARY KEY, jns_perkara_reg_id VARCHAR(30), jns_perkara VARCHAR(100));
 
-CREATE TABLE IF NOT EXISTS perkara(
-   id SERIAL PRIMARY KEY,
-   id_client SERIAL,
-   id_penasehat_hukum SERIAL,
-   id_asisten SERIAL,
-   
-   no_perkara VARCHAR(100),
-   no_laporan_polisi VARCHAR(100),
-   no_dll VARCHAR(100),
-   reg_id VARCHAR(100),
-   
-   judul VARCHAR(100),
-   deskripsi VARCHAR,
-   
-   para_pihak_tergugat JSONB,
-   
-   tgl_dibuat_perkara TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-   tgl_selesai_perkara TIMESTAMP
-);
+CREATE TABLE IF NOT EXISTS perkara( id SERIAL PRIMARY KEY, id_client SERIAL, id_penasehat_hukum JSONB, id_asisten JSONB, no_perkara VARCHAR(100), no_laporan_polisi VARCHAR(100), no_dll VARCHAR(100), jns_perkara_order VARCHAR, judul VARCHAR(100), deskripsi VARCHAR, para_pihak_tergugat JSONB, tgl_dibuat_perkara TIMESTAMP DEFAULT CURRENT_TIMESTAMP, tgl_selesai_perkara TIMESTAMP );
 
 CREATE TABLE IF NOT EXISTS log_activity( 
     id SERIAL PRIMARY KEY, 
