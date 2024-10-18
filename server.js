@@ -91,7 +91,7 @@ app.get('/get_perkara', async (req, res) => {
   try {
     const client = await pool.connect();
     // const result = await client.query('SELECT  jns_perkara FROM perkara ORDER BY tgl_dibuat_perkara DESC');
-    const result = await client.query('SELECT id, id_client, no_perkara, jns_perkara, judul, deskripsi, tgl_dibuat_perkara FROM perkara ORDER BY tgl_dibuat_perkara DESC');
+    const result = await client.query('SELECT id, id_client, no_perkara, jns_perkara_order, judul, deskripsi, tgl_dibuat_perkara FROM perkara ORDER BY tgl_dibuat_perkara DESC');
     client.release(); // Release the client back to the pool
     res.status(200).json(result.rows);
   } 
