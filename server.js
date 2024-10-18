@@ -87,11 +87,29 @@ app.get('/get_pendamping', async (req, res) => {
   }
 });
 
+app.get('/get_nama_client', async (req, res) =>{
+  try {
+    // console.log(req.query.id_client);
+    const client = await pool.connect();
+    const result = await client.query('SELECT nm_client FROM client where id=$1',[req.query.id_client]);
+    // const result = await client.query('SELECT nm_client FROM client where id=3');
+    client.release(); // Release the client back to the pool
+    
+    // console.log(result.rows);
+
+    res.status(200).json(result.rows);
+  } 
+  catch (err) {
+    console.error('Error executing query', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 app.get('/get_perkara', async (req, res) => {
   try {
     const client = await pool.connect();
     // const result = await client.query('SELECT  jns_perkara FROM perkara ORDER BY tgl_dibuat_perkara DESC');
-    const result = await client.query('SELECT id, id_client, no_perkara, jns_perkara_order, judul, deskripsi, tgl_dibuat_perkara FROM perkara ORDER BY tgl_dibuat_perkara DESC');
+    const result = await client.query('SELECT id, id_client, no_perkara, jns_perkara_order, judul, deskripsi, para_pihak_tergugat, tgl_dibuat_perkara FROM perkara ORDER BY tgl_dibuat_perkara DESC');
     client.release(); // Release the client back to the pool
     res.status(200).json(result.rows);
   } 
