@@ -210,6 +210,8 @@ app.post('/save_perkara', async (req, res) => {
   const {idClient, IdPenasihat, IdPendamping, NoPerkara, NoLpPol, NoLainnya, perkaraOrder, Judul, Deskripsi, ParaPihakTergugat, table_name} = req.body;
   
   console.log("idpenasihat : ", IdPenasihat);
+  console.log("idpendamping : ", IdPendamping);
+  console.log("para tergugat : ", ParaPihakTergugat);
 
   /*
   try {
