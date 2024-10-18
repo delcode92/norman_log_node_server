@@ -209,6 +209,8 @@ app.post('/save_client', async (req, res) => {
 app.post('/save_perkara', async (req, res) => {
   const {idClient, IdPenasihat, IdPendamping, NoPerkara, NoLpPol, NoLainnya, perkaraOrder, Judul, Deskripsi, ParaPihakTergugat, table_name} = req.body;
   
+  console.log("idpenasihat : ", IdPenasihat);
+
   /*
   try {
     const client = await pool.connect();
