@@ -322,7 +322,23 @@ app.post('/save_ap_bio', async (req, res) => {
 
 
 app.post('/login', async (req, res) => {
+  const { username, password } = req.body;
+  console.log("username:", username);
+  console.log("password:", password);
 
+
+  try {
+    const client = await pool.connect();
+    const result = await client.query("SELECT count(*) as jum from users where username=$1 AND password=$2",[username, password]);
+    client.release();
+
+    let login_stat = result.rows[0].jum==1 ? true : false;    
+    res.json(login_stat);
+
+  } catch (err) {
+    console.error('Error executing query', err);
+    res.status(500).json({ error: 'Something wrong' });
+  }
 });
 
 app.listen(PORT, () => {
