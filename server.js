@@ -137,16 +137,28 @@ app.get('/get_perkara', async (req, res) => {
   }
 });
 
-// on expressJS could I use routing like below ?
-// first route if not have parameter
-// second route if has param
-// app.get('/get_log', async (req, res) => {}
-// app.get('/get_log/:perkara_id', async (req, res) => {}
 
-app.get('/get_log/:perkara_id', async (req, res) => {
+app.get('/get_details', async (req, res) => {
+  const {case_id} = req.query;
+  
   try {
     const client = await pool.connect();
-    const result = await client.query("SELECT * FROM log_activity WHERE no_perkara='"+req.params.perkara_id+"'  ORDER BY log_time DESC");
+    const result = await client.query("SELECT * FROM perkara WHERE id=$1", [case_id]);
+    client.release(); // Release the client back to the pool
+    res.status(200).json(result.rows);
+  } 
+  catch (err) {
+    console.error('Error executing query', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+app.get('/get_log', async (req, res) => {
+  const {no_perkara} = req.query;
+  
+  try {
+    const client = await pool.connect();
+    const result = await client.query("SELECT * FROM log_activity WHERE no_perkara=$1 ORDER BY log_time DESC", [no_perkara]);
     client.release(); // Release the client back to the pool
     res.status(200).json(result.rows);
   } 

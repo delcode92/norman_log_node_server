@@ -77,12 +77,12 @@ CREATE TABLE IF NOT EXISTS log_activity(
 select * from perkara where id_asisten @>'[1]';
 
 -- add element into jsonb
-UPDATE perkara SET id_asisten = jsonb_set(id_asisten, '{5}', 'true', true) WHERE id = 1;
+UPDATE perkara SET id_asisten = jsonb_set(id_asisten, '{999}', 'true', true) WHERE id = 1;
+UPDATE perkara SET id_asisten = jsonb_set(id_asisten, '{999}', '5') WHERE id = 1;
 
 -- delete element on jsonb
-UPDATE perkara
-SET id_asisten = id_asisten - 1 -- Removes the element at index 1
-WHERE id = 1;
+ -- Removes the element at index 1
+UPDATE perkara SET id_asisten = id_asisten - 1 WHERE id = 1;
 
 
 -- replace value on jsonb
