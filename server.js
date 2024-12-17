@@ -106,10 +106,24 @@ app.get('/get_nama_client', async (req, res) =>{
 });
 
 app.get('/get_perkara', async (req, res) => {
+  
+  const { id_asisten } = req.body;
+
   try {
+    const jsonbValue = JSON.stringify([id_asisten]);
     const client = await pool.connect();
-    // const result = await client.query('SELECT  jns_perkara FROM perkara ORDER BY tgl_dibuat_perkara DESC');
-    const result = await client.query('SELECT id, id_client, no_perkara, jns_perkara_order, judul, deskripsi, para_pihak_tergugat, tgl_dibuat_perkara FROM perkara ORDER BY tgl_dibuat_perkara DESC');
+    const result = await client.query(
+      `SELECT 
+         id, id_client, no_perkara, jns_perkara_order, judul, deskripsi, para_pihak_tergugat, tgl_dibuat_perkara 
+       FROM 
+         perkara 
+       WHERE 
+         id_asisten @> $1 
+       ORDER BY 
+         tgl_dibuat_perkara DESC`,
+      [jsonbValue] // Pass the value as a parameter
+    );
+    
     client.release(); // Release the client back to the pool
     res.status(200).json(result.rows);
   } 
@@ -329,11 +343,20 @@ app.post('/login', async (req, res) => {
 
   try {
     const client = await pool.connect();
-    const result = await client.query("SELECT count(*) as jum from users where username=$1 AND password=$2",[username, password]);
+    const result = await client.query("SELECT count(*) as jum, id_asisten from users where username=$1 AND password=$2 GROUP BY id_asisten",[username, password]);
+    let id_asisten = 0;
+
     client.release();
 
-    let login_stat = result.rows[0].jum==1 ? true : false;    
-    res.json(login_stat);
+    // if correct username and pass
+    if(result.rows[0].jum==1){
+      id_asisten = result.rows[0].id_asisten;
+    }
+    // let login_stat = result.rows[0].jum==1 ? true : false;    
+    
+    console.log("id_asisten: ", id_asisten);
+    
+    res.json(id_asisten);
 
   } catch (err) {
     console.error('Error executing query', err);
