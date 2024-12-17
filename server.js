@@ -107,8 +107,8 @@ app.get('/get_nama_client', async (req, res) =>{
 
 app.get('/get_perkara', async (req, res) => {
   
-  const { id_asisten } = req.body;
-
+  const { id_asisten } = req.query;
+  console.log("id_asisten: ",id_asisten);
   try {
     const jsonbValue = JSON.stringify([id_asisten]);
     const client = await pool.connect();
@@ -124,6 +124,10 @@ app.get('/get_perkara', async (req, res) => {
       [jsonbValue] // Pass the value as a parameter
     );
     
+    
+    console.log(jsonbValue);
+    // console.log(result.rows);
+
     client.release(); // Release the client back to the pool
     res.status(200).json(result.rows);
   } 
