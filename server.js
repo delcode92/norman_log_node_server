@@ -44,6 +44,13 @@ const storage = new CloudinaryStorage({
 const upload = multer({ storage: storage });
 // ======================================
 
+// ============= SSE =============
+function sendEventToClients(eventType, data) {
+  clients.forEach(client => {
+      client.response.write(`event: ${eventType}\n`);
+      client.response.write(`data: ${JSON.stringify(data)}\n\n`);
+  });
+}
 
 app.get('/get_jns_perkara', async (req, res) => {
   try {
@@ -170,6 +177,31 @@ app.get('/get_log', async (req, res) => {
 });
 
 app.get('/get_active_logs', async (req, res) => {
+  
+  let data_count = 0;
+  try{
+    const client = await pool.connect();
+
+    // check if any changing data every 3 seconds
+    setInterval( async () => {
+      const result_count = await client.query("SELECT count(*) as jum FROM log_activity WHERE no_perkara IN ( SELECT no_perkara FROM perkara WHERE tgl_selesai_perkara IS NULL ) ORDER BY log_time DESC");
+      
+      if(result_count.rows[0].jum>data_count || result_count.rows[0].jum<data_count){
+        // push data to client
+        const result = await client.query("SELECT * FROM log_activity WHERE no_perkara IN ( SELECT no_perkara FROM perkara WHERE tgl_selesai_perkara IS NULL ) ORDER BY log_time DESC");
+        sendEventToClients('update', JSON.stringify(result.rows));
+      }
+      
+      data_count = result_count.rows[0].jum;
+
+    },3000);
+  }
+  catch (err) {
+    console.error('Error executing query', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+
+ /* 
   try {
     const client = await pool.connect();
 
@@ -181,6 +213,8 @@ app.get('/get_active_logs', async (req, res) => {
     console.error('Error executing query', err);
     res.status(500).json({ error: 'Internal server error' });
   }
+  */
+
 });
 
 // WHEN EDITOR SELECT LOG TO EDIT
