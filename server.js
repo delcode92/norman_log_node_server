@@ -198,11 +198,21 @@ app.get('/get_log_edit/:log_id', async (req, res) => {
 });
 
 app.post('/add_log', async (req, res) => {
-  const { no_perkara, log_text } = req.body;
+  const { id_perkara, id_asisten, log_text } = req.body;
+  console.log(id_perkara, id_asisten, log_text);
   
   try {
     const client = await pool.connect();
-    const result = await client.query("INSERT INTO log_activity (no_perkara, log_text) VALUES ('"+no_perkara+"', '"+log_text+"')");
+  
+    const result = await client.query(`INSERT INTO log_activity (no_perkara, id_client, id_asisten, log_text) 
+                                        SELECT 
+                                          p.no_perkara, 
+                                          p.id_client::varchar, 
+                                          $1, 
+                                          $2 
+                                        FROM perkara p 
+                                        WHERE p.id=$3;`, [id_asisten, log_text, id_perkara]);
+
     client.release(); // Release the client back to the pool
     res.status(200).json({ success: true });
 

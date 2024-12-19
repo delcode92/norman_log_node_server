@@ -87,3 +87,6 @@ UPDATE perkara SET id_asisten = id_asisten - 1 WHERE id = 1;
 
 -- replace value on jsonb
 UPDATE perkara SET id_asisten = ( SELECT jsonb_agg( CASE WHEN elem = 'true' THEN '"5"' ELSE elem END ) FROM jsonb_array_elements(id_asisten) AS elem ) WHERE id = 1;
+
+
+INSERT INTO log_activity (no_perkara, id_client, id_asisten, log_text) SELECT p.no_perkara, p.id_client::varchar, p.id_asisten::varchar, 'test log activity message' FROM perkara p WHERE p.id_perkara=1;
