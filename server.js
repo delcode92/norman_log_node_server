@@ -12,6 +12,28 @@ const { Pool } = require('pg');
 const PORT = 8082;
 
 app.use(cors());
+// app.use(cors());
+
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000'); // Your Next.js app URL
+  res.setHeader('Access-Control-Allow-Methods', 'GET');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader('Cache-Control', 'no-cache');
+  res.setHeader('Connection', 'keep-alive');
+  next();
+});
+
+// app.use((req, res, next) => {
+//   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000'); // Your Next.js app URL
+//   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+//   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+//   res.setHeader('Cache-Control', 'no-cache');
+//   res.setHeader('Connection', 'keep-alive');
+//   next();
+// });
+
+
 
 // Middleware to parse JSON request body
 app.use(bodyParser.json());
@@ -45,6 +67,7 @@ const upload = multer({ storage: storage });
 // ======================================
 
 // ============= SSE =============
+const clients = new Map();
 function sendEventToClients(eventType, data) {
   clients.forEach(client => {
       client.response.write(`event: ${eventType}\n`);
@@ -177,44 +200,69 @@ app.get('/get_log', async (req, res) => {
 });
 
 app.get('/get_active_logs', async (req, res) => {
-  
+  // Set headers for SSE
+  // res.writeHead(200, {
+  //   'Content-Type': 'text/event-stream',
+  //   'Cache-Control': 'no-cache',
+  //   'Connection': 'keep-alive',
+  //   'Access-Control-Allow-Origin': '*',
+  //   'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
+  // });
+  res.writeHead(200, {
+    'Content-Type': 'text/event-stream',
+    'Cache-Control': 'no-cache',          
+    'Content-Encoding': 'none',
+    'Connection': 'keep-alive',
+    'Access-Control-Allow-Origin': '*'
+  });
+
+  // Flush headers immediately
+  res.flushHeaders();
+
   let data_count = 0;
-  try{
-    const client = await pool.connect();
 
-    // check if any changing data every 3 seconds
-    setInterval( async () => {
-      const result_count = await client.query("SELECT count(*) as jum FROM log_activity WHERE no_perkara IN ( SELECT no_perkara FROM perkara WHERE tgl_selesai_perkara IS NULL ) ORDER BY log_time DESC");
-      
-      if(result_count.rows[0].jum>data_count || result_count.rows[0].jum<data_count){
-        // push data to client
-        const result = await client.query("SELECT * FROM log_activity WHERE no_perkara IN ( SELECT no_perkara FROM perkara WHERE tgl_selesai_perkara IS NULL ) ORDER BY log_time DESC");
-        sendEventToClients('update', JSON.stringify(result.rows));
-      }
-      
-      data_count = result_count.rows[0].jum;
+  console.log("SSE connection started...");
 
-    },3000);
-  }
-  catch (err) {
-    console.error('Error executing query', err);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-
- /* 
   try {
     const client = await pool.connect();
+ 
+    const interval = setInterval(async () => {
+      try {
+        const result_count = await client.query("SELECT count(*) as jum FROM log_activity WHERE no_perkara IN ( SELECT no_perkara FROM perkara WHERE tgl_selesai_perkara IS NULL )");
+        console.log("count: ", result_count.rows[0].jum);
+     
+        if (result_count.rows[0].jum !== data_count) {
+          const result = await client.query("SELECT * FROM log_activity WHERE no_perkara IN ( SELECT no_perkara FROM perkara WHERE tgl_selesai_perkara IS NULL ) ORDER BY log_time DESC");
+          
+          const sseData = `data: ${JSON.stringify(result.rows)}\n\n`;
+          console.log("Sending data to client:", sseData); // Debug log
+          res.write(sseData);
+          
+          // Use flushHeaders() instead of flush()
+          if (typeof res.flushHeaders === 'function') {
+            res.flushHeaders();
+          }
+          
+          console.log("Data sent to client");
+        }
+     
+        data_count = result_count.rows[0].jum;
+      } catch (queryError) {
+        console.error('Query error:', queryError);
+      }
+    }, 3000);
 
-    const result = await client.query("SELECT * FROM log_activity WHERE no_perkara IN ( SELECT no_perkara FROM perkara WHERE tgl_selesai_perkara IS NULL ) ORDER BY log_time DESC");
-    client.release();
-    res.status(200).json(result.rows);
-  } 
-  catch (err) {
-    console.error('Error executing query', err);
-    res.status(500).json({ error: 'Internal server error' });
+    // Clean up on client disconnect
+    req.on('close', () => {
+      clearInterval(interval);
+      client.release();
+      console.log("Client disconnected, cleaning up...");
+    });
+   
+  } catch (err) {
+    console.error('Connection error:', err);
+    res.end();
   }
-  */
-
 });
 
 // WHEN EDITOR SELECT LOG TO EDIT
