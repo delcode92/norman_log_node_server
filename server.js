@@ -11,18 +11,22 @@ const cors = require("cors");
 const { Pool } = require('pg');
 const PORT = 8082;
 
-app.use(cors());
 // app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:3000', // Your Next.js app URL
+  methods: ['GET', 'POST'],
+  credentials: true
+}));
 
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000'); // Your Next.js app URL
-  res.setHeader('Access-Control-Allow-Methods', 'GET');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
-  res.setHeader('Cache-Control', 'no-cache');
-  res.setHeader('Connection', 'keep-alive');
-  next();
-});
+// app.use((req, res, next) => {
+//   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000'); // Your Next.js app URL
+//   res.setHeader('Access-Control-Allow-Methods', 'GET');
+//   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+//   res.setHeader('Access-Control-Allow-Credentials', 'true');
+//   res.setHeader('Cache-Control', 'no-cache');
+//   res.setHeader('Connection', 'keep-alive');
+//   next();
+// });
 
 // app.use((req, res, next) => {
 //   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000'); // Your Next.js app URL
@@ -208,13 +212,21 @@ app.get('/get_active_logs', async (req, res) => {
   //   'Access-Control-Allow-Origin': '*',
   //   'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
   // });
-  res.writeHead(200, {
-    'Content-Type': 'text/event-stream',
-    'Cache-Control': 'no-cache',          
-    'Content-Encoding': 'none',
-    'Connection': 'keep-alive',
-    'Access-Control-Allow-Origin': '*'
-  });
+
+  // res.writeHead(200, {
+  //   'Content-Type': 'text/event-stream',
+  //   'Cache-Control': 'no-cache',          
+  //   'Content-Encoding': 'none',
+  //   'Connection': 'keep-alive',
+  //   'Access-Control-Allow-Origin': '*'
+  // });
+
+  res.setHeader('Content-Type', 'text/event-stream');
+  res.setHeader('Cache-Control', 'no-cache');
+  res.setHeader('Connection', 'keep-alive');
+  res.setHeader('Content-Encoding', 'none');
+  res.setHeader('Access-Control-Allow-Origin', '*'); 
+
 
   // Flush headers immediately
   res.flushHeaders();
