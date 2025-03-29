@@ -140,27 +140,6 @@ app.get('/get_nama_client', async (req, res) =>{
   }
 });
 
-app.get('/get_all_perkara', async (req, res) => {
-  try {
-    const client = await pool.connect();
-    const result = await client.query(
-      `SELECT 
-         id, id_client, no_perkara, jns_perkara_order, judul, deskripsi, para_pihak_tergugat, tgl_dibuat_perkara 
-       FROM 
-         perkara 
-       ORDER BY 
-         tgl_dibuat_perkara DESC`
-    );
-
-    client.release();
-    res.status(200).json(result.rows);
-  } 
-  catch (err) {
-    console.error('Error executing query', err);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
-
 app.get('/get_perkara', async (req, res) => {
   
   const { id_asisten } = req.query;
@@ -259,7 +238,6 @@ app.get('/events', (req, res) => {
   });
 });
 
-
 app.get('/get_active_logs', async (req, res) => {
 
   res.setHeader('Content-Type', 'text/event-stream');
@@ -291,18 +269,13 @@ app.get('/get_active_logs', async (req, res) => {
           console.log(`limit: ${limit}, offset: ${offset}`);
 
           const result = await client.query(
-            `SELECT 
-            l.*,
-            a.nama as nama_asisten
-          FROM log_activity l
-          LEFT JOIN asisten a ON CAST(l.id_asisten AS INTEGER) = a.id
-          WHERE l.no_perkara IN (
-            SELECT no_perkara 
-            FROM perkara 
-            WHERE tgl_selesai_perkara IS NULL
-          )
-          ORDER BY l.log_time DESC
-          LIMIT $1 OFFSET $2`,
+            `
+              SELECT * 
+              FROM log_activity 
+              WHERE no_perkara IN (SELECT no_perkara FROM perkara WHERE tgl_selesai_perkara IS NULL)
+              ORDER BY log_time DESC
+              LIMIT $1 OFFSET $2
+            `,
             [limit, offset]
           );
 
@@ -331,6 +304,48 @@ app.get('/get_active_logs', async (req, res) => {
     res.end();
   }
 
+  // try {
+  //   const client = await pool.connect();
+ 
+  //   const interval = setInterval(async () => {
+  //     try {
+  //       const result_count = await client.query("SELECT count(*) as jum FROM log_activity WHERE no_perkara IN ( SELECT no_perkara FROM perkara WHERE tgl_selesai_perkara IS NULL )");
+  //       console.log("count: ", result_count.rows[0].jum);
+     
+  //       if (result_count.rows[0].jum !== data_count) {
+  //         const result = await client.query("SELECT * FROM log_activity WHERE no_perkara IN ( SELECT no_perkara FROM perkara WHERE tgl_selesai_perkara IS NULL ) ORDER BY log_time DESC");
+          
+  //         const sseData = `data: ${JSON.stringify(result.rows)}\n\n`;
+  //         // res.send(sseData);
+  //         // console.log("Sending data to client:", sseData); // Debug log
+  //         res.write(sseData);
+  //         // res.flushHeaders();
+
+  //         // Use flushHeaders() instead of flush()
+  //         if (typeof res.flushHeaders === 'function') {
+  //           res.flushHeaders();
+  //         }
+          
+  //         console.log("Data sent to client");
+  //       }
+     
+  //       // data_count = result_count.rows[0].jum;
+  //     } catch (queryError) {
+  //       // console.error('Query error:', queryError);
+  //     }
+  //   }, 3000);
+
+  //   // Clean up on client disconnect
+  //   req.on('close', () => {
+  //     clearInterval(interval);
+  //     client.release();
+  //     console.log("Client disconnected, cleaning up...");
+  //   });
+   
+  // } catch (err) {
+  //   console.error('Connection error:', err);
+  //   res.end();
+  // }
 });
 
 // WHEN EDITOR SELECT LOG TO EDIT
@@ -500,8 +515,8 @@ app.post('/save_perkara', async (req, res) => {
 });
 
 app.post('/save_ap_bio', async (req, res) => {
-  const { Name, Email, Phone, Addr, Username, Pass, table_name } = req.body;
-  console.log(Name, Email, Phone, Addr, Username, Pass, table_name ); 
+  const { Name, Email, Phone, Addr, table_name } = req.body;
+  console.log(Name, Email, Phone, Addr, table_name ); 
   
   try {
     const client = await pool.connect();
@@ -511,14 +526,8 @@ app.post('/save_ap_bio', async (req, res) => {
     // );
 
     const result = await client.query(
-      `INSERT INTO "${table_name}" (nama, email, hp, addr) VALUES ($1, $2, $3, $4) RETURNING id`, 
-      [Name, Email, Phone, Addr]
+      "INSERT INTO "+table_name+" (nama, email, hp, addr) VALUES ('"+Name+"', '"+Email+"', '"+Phone+"', '"+Addr+"')"
     );
-    
-    // Get the inserted id
-    const newId = result.rows[0].id;
-
-    const result2 = await client.query("INSERT INTO users (username, password, id_asisten, level) VALUES ($1, $2, $3, 'asisten')", [Username, Pass, newId]);
 
     client.release(); // Release the client back to the pool
     res.status(200).json({ success: true });
